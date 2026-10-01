@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>日文50音大字練習 (iPad橫向優化版)</title>
+  <title>日文 50 音大字練習</title>
   <style>
     :root {
       --bg-color: #fdfaf6;
@@ -19,14 +19,12 @@
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     html, body {
       margin: 0; padding: 0;
-      width: 100vw; height: 100vh;
-      overflow: hidden;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      width: 100vw; height: 100vh; overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       background-color: var(--bg-color); color: var(--text-main);
     }
     body { display: flex; flex-direction: column; }
 
-    /* 頂部導覽列 */
     header {
       background-color: var(--primary); color: white;
       padding: 10px 24px; display: flex; justify-content: space-between; align-items: center;
@@ -36,13 +34,12 @@
     
     nav { display: flex; gap: 8px; }
     .tab-btn {
-      padding: 8px 24px; font-size: 20px; font-weight: bold;
+      padding: 8px 18px; font-size: 19px; font-weight: bold;
       border: 2px solid white; background: transparent; color: white;
       border-radius: 30px; cursor: pointer;
     }
     .tab-btn.active { background: white; color: var(--primary-dark); }
 
-    /* 主畫面區塊 (滿版) */
     main {
       flex: 1; height: calc(100vh - 60px);
       padding: 12px 24px; display: flex; flex-direction: column; justify-content: space-between;
@@ -51,18 +48,6 @@
     .page { display: none; width: 100%; height: 100%; }
     .page.active { display: flex; flex-direction: column; justify-content: space-between; }
 
-    /* 五十音行快速切換 */
-    .row-selector {
-      display: flex; gap: 10px; justify-content: center; height: 45px; flex-shrink: 0;
-    }
-    .row-btn {
-      padding: 4px 20px; font-size: 18px; font-weight: bold;
-      border: 2px solid var(--primary); background: white; color: var(--primary);
-      border-radius: 20px; cursor: pointer;
-    }
-    .row-btn.active { background: var(--primary); color: white; }
-
-    /* 橫向雙欄佈局 (善用橫向空間) */
     .landscape-container {
       display: flex; flex: 1; gap: 24px; width: 100%; margin: 8px 0; overflow: hidden;
     }
@@ -72,7 +57,6 @@
       align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
 
-    /* 左欄：超大假名顯示 */
     .kana-display-box { display: flex; align-items: baseline; gap: 16px; margin-bottom: 8px; }
     .main-kana { font-size: 130px; font-weight: bold; color: var(--primary-dark); line-height: 1; }
     .sub-kana { font-size: 70px; color: #7f8c8d; font-weight: bold; }
@@ -82,19 +66,17 @@
       font-size: 26px; font-weight: bold; color: var(--text-sub); text-align: center; width: 90%;
     }
 
-    /* 右欄：單字卡與播音圖示 */
     .word-card {
       background: #fff9eb; border: 3px dashed var(--accent);
-      border-radius: 20px; padding: 16px; width: 100%;
-      cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px;
+      border-radius: 20px; padding: 20px; width: 100%;
+      cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 12px;
     }
     .word-header { display: flex; align-items: center; gap: 16px; }
-    .word-icon { font-size: 55px; }
-    .word-text { font-size: 42px; font-weight: bold; color: #d35400; }
-    .word-meaning { font-size: 26px; color: #555; font-weight: bold; }
-    .sentence-box { font-size: 22px; color: #27ae60; font-weight: bold; margin-top: 4px; text-align: center; }
+    .word-icon { font-size: 60px; }
+    .word-text { font-size: 46px; font-weight: bold; color: #d35400; }
+    .word-meaning { font-size: 28px; color: #555; font-weight: bold; }
+    .sentence-box { font-size: 26px; color: #27ae60; font-weight: bold; text-align: center; margin-top: 8px; }
 
-    /* 特大號播音按鈕 */
     .giant-speaker-btn {
       background: var(--primary); color: white; border: none;
       width: 100%; padding: 16px; font-size: 28px; font-weight: bold;
@@ -103,7 +85,6 @@
       display: flex; align-items: center; justify-content: center; gap: 12px;
     }
 
-    /* 下方固定導覽按鈕 (防止跑版) */
     .bottom-nav {
       display: flex; gap: 20px; height: 60px; flex-shrink: 0; width: 100%;
     }
@@ -113,7 +94,21 @@
       border-radius: 18px; cursor: pointer; text-align: center;
     }
 
-    /* 手指描寫畫板 */
+    /* 五十音總表樣式 */
+    .overview-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
+      width: 100%; height: 100%; overflow-y: auto; padding: 10px;
+    }
+    .overview-card {
+      background: white; border: 3px solid var(--border-color);
+      border-radius: 20px; padding: 16px 8px; text-align: center;
+      cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .overview-card:active { background: #fde8e8; border-color: var(--primary); }
+    .overview-kana { font-size: 42px; font-weight: bold; color: var(--primary-dark); }
+    .overview-sub { font-size: 22px; color: #7f8c8d; font-weight: bold; margin-top: 4px; }
+
     .canvas-wrapper { position: relative; width: 340px; height: 340px; }
     canvas {
       background: white; border: 3px solid var(--border-color);
@@ -125,7 +120,6 @@
       border: none; border-radius: 14px; cursor: pointer; background: #e0e0e0;
     }
 
-    /* 測驗頁面 */
     .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; height: 70%; }
     .quiz-btn {
       background: white; border: 3px solid var(--border-color);
@@ -140,7 +134,8 @@
     <h1>日文 50 音練習</h1>
     <nav>
       <button class="tab-btn active" onclick="switchTab('flashcard')">大字閃卡</button>
-      <button class="tab-btn" onclick="switchTab('writing')">筆順手指寫字</button>
+      <button class="tab-btn" onclick="switchTab('overview')">五十音總表</button>
+      <button class="tab-btn" onclick="switchTab('writing')">手指寫字</button>
       <button class="tab-btn" onclick="switchTab('quiz')">聽音選字</button>
     </nav>
   </header>
@@ -148,10 +143,7 @@
   <main>
     <!-- 閃卡頁面 -->
     <section id="flashcard" class="page active">
-      <div class="row-selector" id="rowSelector"></div>
-      
       <div class="landscape-container">
-        <!-- 左欄：假名與發音標示 -->
         <div class="column-left">
           <div class="kana-display-box">
             <span id="mainKana" class="main-kana">あ</span>
@@ -159,11 +151,10 @@
           </div>
           <div id="phonetic" class="phonetic-box">羅馬字: a | 諧音: 「阿」</div>
           <button class="giant-speaker-btn" onclick="speakCurrentKana()">
-            <span style="font-size: 36px;">🔊</span> 點我聽發音
+            <span style="font-size: 36px;">🔊</span> 聽假名發音
           </button>
         </div>
 
-        <!-- 右欄：單字與例句 -->
         <div class="column-right">
           <div class="word-card" onclick="speakCurrentWord()">
             <div class="word-header">
@@ -171,38 +162,38 @@
               <span id="wordText" class="word-text">あめ</span>
               <span id="wordMeaning" class="word-meaning">(糖果)</span>
             </div>
-            <div id="sentenceText" class="sentence-box">例句：あめを たべる (吃糖果)</div>
-            <div style="font-size: 20px; color: #888; margin-top: 4px;">🔊 點擊播放單字與例句</div>
+            <div id="sentenceText" class="sentence-box">例句：あめを たべる</div>
+            <div style="font-size: 22px; color: #888; margin-top: 8px;">🔊 點擊朗讀單字與例句</div>
           </div>
         </div>
       </div>
 
       <div class="bottom-nav">
-        <button class="nav-btn" onclick="prevKana()">⬅️ 上一個假名</button>
-        <button class="nav-btn" onclick="nextKana()">下一個假名 ➡️</button>
+        <button class="nav-btn" onclick="prevKana()">⬅️ 上一個</button>
+        <button class="nav-btn" onclick="nextKana()">下一個 ➡️</button>
       </div>
     </section>
 
-    <!-- 手指筆順描寫頁面 -->
+    <!-- 五十音總表頁面 (點擊直接跳轉) -->
+    <section id="overview" class="page">
+      <h2 style="margin: 0 0 12px 0; font-size: 26px; text-align: center;">點擊任意假名，直接跳轉練習：</h2>
+      <div class="overview-grid" id="overviewGrid"></div>
+    </section>
+
+    <!-- 手指寫字頁面 -->
     <section id="writing" class="page">
       <div class="landscape-container">
         <div class="column-left">
-          <h2 style="margin: 0 0 8px 0; font-size: 26px;">筆順引導 (1 2 3)</h2>
           <div class="canvas-wrapper">
             <canvas id="writeCanvas" width="340" height="340"></canvas>
           </div>
           <div class="canvas-tools">
             <button class="tool-btn" onclick="clearCanvas()">🗑️ 重寫</button>
-            <button class="tool-btn" onclick="speakCurrentKana()" style="background: var(--primary); color: white;">🔊 再聽一次</button>
+            <button class="tool-btn" onclick="speakCurrentKana()" style="background: var(--primary); color: white;">🔊 聽發音</button>
           </div>
         </div>
         <div class="column-right">
-          <div style="font-size: 26px; font-weight: bold; margin-bottom: 12px;">請順著數字與箭頭方向描寫：</div>
-          <div id="strokeGuideText" style="font-size: 24px; color: var(--primary-dark); line-height: 1.6;">
-            1. 第一筆：從左到右畫橫線<br>
-            2. 第二筆：從上往下畫豎線<br>
-            3. 第三筆：畫一個圓弧
-          </div>
+          <div style="font-size: 32px; font-weight: bold; color: var(--primary-dark);">請看左邊灰字，直接跟著描寫</div>
         </div>
       </div>
 
@@ -225,19 +216,19 @@
 
   <script>
     const kanaData = [
-      { h: 'あ', k: 'ア', r: 'a', tw: '阿', word: 'あめ', wordIcon: '🍬', meaning: '糖果', sentence: 'あめを たべる (吃糖果)', guide: '1. 從左到右劃線 →<br>2. 從上往下畫線 ↓<br>3. 順時針畫個大圓弧 ↷' },
-      { h: 'い', k: 'イ', r: 'i', tw: '依', word: 'いぬ', wordIcon: '🐕', meaning: '小狗', sentence: 'かわいい いぬ (可愛的小狗)', guide: '1. 左邊從上往下勾 ⤦<br>2. 右邊短豎線 ↓' },
-      { h: 'う', k: 'ウ', r: 'u', tw: '烏', word: 'うみ', wordIcon: '🌊', meaning: '大海', sentence: 'ひろい うみ (廣闊的大海)', guide: '1. 上方短撇 ↘<br>2. 下方畫一個半圓弧 ↷' },
-      { h: 'え', k: 'エ', r: 'e', tw: '埃', word: 'えき', wordIcon: '🚉', meaning: '車站', sentence: 'えきに いきます (去車站)', guide: '1. 上方短撇 ↘<br>2. 一筆畫出折線與底橫 〰️' },
-      { h: 'お', k: 'オ', r: 'o', tw: '歐', word: 'おか', wordIcon: '🏔️', meaning: '山丘', sentence: 'たかい おか (高高的山丘)', guide: '1. 從左到右短橫 →<br>2. 豎線下轉畫圈 ↷<br>3. 右上方點一點 ↘' }
+      { h: 'あ', k: 'ア', r: 'a', tw: '阿', word: 'あめ', wordIcon: '🍬', meaning: '糖果', sentence: 'あめを たべる' },
+      { h: 'い', k: 'イ', r: 'i', tw: '依', word: 'いぬ', wordIcon: '🐕', meaning: '小狗', sentence: 'かわいい いぬ' },
+      { h: 'う', k: 'ウ', r: 'u', tw: '烏', word: 'うみ', wordIcon: '🌊', meaning: '大海', sentence: 'ひろい うみ' },
+      { h: 'え', k: 'エ', r: 'e', tw: '埃', word: 'えき', wordIcon: '🚉', meaning: '車站', sentence: 'えきに いきます' },
+      { h: 'お', k: 'オ', r: 'o', tw: '歐', word: 'おか', wordIcon: '🏔️', meaning: '山丘', sentence: 'たかい おか' }
     ];
 
     let currentIndex = 0;
     let quizTargetIndex = 0;
 
     function init() {
-      renderRowSelector();
       updateCard();
+      renderOverview();
       initCanvas();
       document.body.addEventListener('click', unlockAudio, { once: true });
     }
@@ -250,11 +241,6 @@
       }
     }
 
-    function renderRowSelector() {
-      const container = document.getElementById('rowSelector');
-      container.innerHTML = `<button class="row-btn active">あ行 (基礎預設)</button>`;
-    }
-
     function updateCard() {
       const item = kanaData[currentIndex];
       document.getElementById('mainKana').innerText = item.h;
@@ -264,20 +250,38 @@
       document.getElementById('wordText').innerText = item.word;
       document.getElementById('wordMeaning').innerText = `(${item.meaning})`;
       document.getElementById('sentenceText').innerText = `例句：${item.sentence}`;
-      document.getElementById('strokeGuideText').innerHTML = item.guide;
       drawCanvasBg();
+    }
+
+    function renderOverview() {
+      const container = document.getElementById('overviewGrid');
+      container.innerHTML = '';
+      kanaData.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'overview-card';
+        card.onclick = () => jumpToKana(index);
+        card.innerHTML = `
+          <div class="overview-kana">${item.h} ${item.k}</div>
+          <div class="overview-sub">${item.r} (${item.tw})</div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function jumpToKana(index) {
+      currentIndex = index;
+      updateCard();
+      speakCurrentKana();
+      switchTab('flashcard');
     }
 
     function speakText(text) {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
-        const u1 = new SpeechSynthesisUtterance(text);
-        u1.lang = 'ja-JP'; u1.rate = 0.5;
-        const u2 = new SpeechSynthesisUtterance(text);
-        u2.lang = 'ja-JP'; u2.rate = 0.5;
-
-        window.speechSynthesis.speak(u1);
-        u1.onend = () => { setTimeout(() => window.speechSynthesis.speak(u2), 400); };
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'ja-JP';
+        u.rate = 0.65;
+        window.speechSynthesis.speak(u);
       }
     }
 
@@ -290,13 +294,16 @@
     function switchTab(tabId) {
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-      event.target.classList.add('active');
+      
+      const targetBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+      if(targetBtn) targetBtn.classList.add('active');
+      
       document.getElementById(tabId).classList.add('active');
       if(tabId === 'writing') drawCanvasBg();
       if(tabId === 'quiz') setupQuiz();
     }
 
-    // Canvas 描寫畫板
+    // Canvas
     let canvas, ctx, isDrawing = false;
     function initCanvas() {
       canvas = document.getElementById('writeCanvas');
@@ -310,7 +317,7 @@
     function drawCanvasBg() {
       if(!ctx) return;
       ctx.clearRect(0,0,canvas.width,canvas.height);
-      ctx.font = '220px sans-serif';
+      ctx.font = '240px sans-serif';
       ctx.fillStyle = '#e2e8f0';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
@@ -328,7 +335,7 @@
     function endDraw() { isDrawing = false; }
     function clearCanvas() { drawCanvasBg(); }
 
-    // 聽音選字測驗
+    // Quiz
     function setupQuiz() {
       quizTargetIndex = Math.floor(Math.random() * kanaData.length);
       document.getElementById('quizFeedback').innerText = '';
