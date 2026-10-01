@@ -251,7 +251,7 @@
       { h: 'い', k: 'イ', r: 'i', word: 'いぬ', wordIcon: '🐕', meaning: '小狗', sentence: 'かわいい いぬ', strokes: [{x:110,y:110,label:'1'},{x:220,y:130,label:'2'}] },
       { h: 'う', k: 'ウ', r: 'u', word: 'うみ', wordIcon: '🌊', meaning: '大海', sentence: 'ひろい うみ', strokes: [{x:160,y:80,label:'1'},{x:120,y:150,label:'2'}] },
       { h: 'え', k: 'エ', r: 'e', word: 'えき', wordIcon: '🚉', meaning: '車站', sentence: 'えきに いきます', strokes: [{x:160,y:80,label:'1'},{x:110,y:140,label:'2'}] },
-      { h: 'お', k: 'オ', r: 'o', word: 'おか', wordIcon: '🏔️', meaning: '山丘', sentence: 'たかい おか', strokes: [{x:90,y:130,label:'1'},{x:160,y:70,label:'2'},{x:250,y:110,label:'3'}] },
+      { h: 'お', k: 'オ', r: 'o', word: 'おか', wordIcon: '🏔️️', meaning: '山丘', sentence: 'たかい おか', strokes: [{x:90,y:130,label:'1'},{x:160,y:70,label:'2'},{x:250,y:110,label:'3'}] },
       { h: 'か', k: 'カ', r: 'ka', word: 'かさ', wordIcon: '☂️', meaning: '雨傘', sentence: '赤い かさ', strokes: [{x:100,y:120,label:'1'},{x:200,y:80,label:'2'},{x:250,y:100,label:'3'}] },
       { h: 'き', k: 'キ', r: 'ki', word: 'き', wordIcon: '🌳', meaning: '樹木', sentence: '大きな き', strokes: [{x:100,y:120,label:'1'},{x:100,y:160,label:'2'},{x:170,y:70,label:'3'}] },
       { h: 'く', k: 'ク', r: 'ku', word: 'くま', wordIcon: '🐻', meaning: '熊', sentence: 'かわいい くま', strokes: [{x:120,y:120,label:'1'}] },
@@ -383,14 +383,14 @@
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(text);
-        u.lang = 'ja-JP'; u.rate = 0.45;
+        u.lang = 'ja-JP'; u.rate = 0.5; // 放慢速度，字字清晰
         window.speechSynthesis.speak(u);
       }
     }
 
+    // ✅ 發音修正：隻朗讀 1 次，尾端帶頓點 `、` 延長音節，自然清晰不重複
     function speakCurrentKana() { 
-      const char = kanaData[currentIndex].h;
-      speakText(`${char}、${char}`); 
+      speakText(`${kanaData[currentIndex].h}、`); 
     }
 
     function speakCurrentWord() { 
@@ -507,8 +507,7 @@
     }
 
     function playQuizSound() { 
-      const char = kanaData[quizTargetIndex].h;
-      speakText(`${char}、${char}`); 
+      speakText(`${kanaData[quizTargetIndex].h}、`); 
     }
 
     function checkQuiz(selectedIdx) {
