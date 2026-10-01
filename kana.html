@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>日文50音大字練習</title>
+  <style>
+    :root {
+      --bg-color: #fcf8f2;
+      --card-bg: #ffffff;
+      --primary: #d9534f;
+      --primary-dark: #b52b27;
+      --secondary: #4a69bd;
+      --text-main: #2c3e50;
+      --text-sub: #5f27cd;
+      --accent: #f6b93b;
+      --border-color: #e1d8cb;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body {
+      margin: 0; padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-color); color: var(--text-main);
+      display: flex; flex-direction: column; height: 100vh; overflow: hidden;
+    }
+    header {
+      background-color: var(--primary); color: white;
+      padding: 12px 16px; text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15); flex-shrink: 0;
+    }
+    header h1 { margin: 0; font-size: 26px; font-weight: bold; }
+    nav {
+      display: flex; background: #ebdcd0; border-bottom: 2px solid var(--border-color); flex-shrink: 0;
+    }
+    .tab-btn {
+      flex: 1; padding: 14px 8px; font-size: 20px; font-weight: bold;
+      border: none; background: transparent; color: #555; cursor: pointer; text-align: center;
+    }
+    .tab-btn.active {
+      background: var(--card-bg); color: var(--primary-dark);
+      border-bottom: 4px solid var(--primary);
+    }
+    main { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; align-items: center; }
+    .page { display: none; width: 100%; max-width: 650px; flex-direction: column; align-items: center; }
+    .page.active { display: flex; }
+    .row-selector {
+      display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 16px; width: 100%;
+    }
+    .row-btn {
+      padding: 8px 16px; font-size: 18px; font-weight: bold;
+      border: 2px solid var(--primary); background: white; color: var(--primary);
+      border-radius: 20px; cursor: pointer;
+    }
+    .row-btn.active { background: var(--primary); color: white; }
+    .card-container {
+      background: var(--card-bg); border: 3px solid var(--border-color);
+      border-radius: 24px; width: 100%; padding: 20px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08); text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+    }
+    .kana-display { display: flex; gap: 20px; align-items: baseline; }
+    .main-kana { font-size: 96px; font-weight: bold; color: var(--primary-dark); line-height: 1; }
+    .sub-kana { font-size: 54px; color: #7f8c8d; font-weight: bold; }
+    .phonetic-box {
+      background: #f0f3f6; border-radius: 12px; padding: 8px 20px;
+      font-size: 24px; font-weight: bold; color: var(--text-sub); width: 100%;
+    }
+    .word-card {
+      background: #fff8e7; border: 2px dashed var(--accent);
+      border-radius: 16px; padding: 12px 20px; width: 100%;
+      cursor: pointer; display: flex; align-items: center; justify-content: space-around;
+    }
+    .word-icon { font-size: 40px; }
+    .word-text { font-size: 28px; font-weight: bold; color: #d35400; }
+    .word-meaning { font-size: 22px; color: #555; }
+    .speaker-btn {
+      background: var(--primary); color: white; border: none;
+      padding: 14px 32px; font-size: 24px; font-weight: bold;
+      border-radius: 40px; cursor: pointer; margin-top: 10px;
+      box-shadow: 0 4px 10px rgba(217, 83, 79, 0.4);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-actions { display: flex; justify-content: space-between; width: 100%; margin-top: 16px; gap: 16px; }
+    .action-btn {
+      flex: 1; padding: 16px; font-size: 22px; font-weight: bold;
+      background: var(--secondary); color: white; border: none;
+      border-radius: 16px; cursor: pointer; text-align: center;
+    }
+    canvas {
+      background: white; border: 3px solid var(--border-color);
+      border-radius: 16px; touch-action: none; margin-top: 10px;
+    }
+    .canvas-tools { display: flex; gap: 12px; margin-top: 12px; width: 100%; }
+    .tool-btn {
+      flex: 1; padding: 12px; font-size: 18px; font-weight: bold;
+      border: none; border-radius: 12px; cursor: pointer; background: #e0e0e0;
+    }
+    .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; margin-top: 20px; }
+    .quiz-btn {
+      background: white; border: 3px solid var(--border-color);
+      border-radius: 20px; padding: 24px; font-size: 48px; font-weight: bold;
+      color: var(--text-main); cursor: pointer; text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <header><h1>日文 50 音大字學習</h1></header>
+  
+  <nav>
+    <button class="tab-btn active" onclick="switchTab('flashcard')">大字閃卡</button>
+    <button class="tab-btn" onclick="switchTab('writing')">手指描寫</button>
+    <button class="tab-btn" onclick="switchTab('quiz')">聽音選字</button>
+  </nav>
+
+  <main>
+    <!-- 閃卡頁面 -->
+    <section id="flashcard" class="page active">
+      <div class="row-selector" id="rowSelector"></div>
+      <div class="card-container">
+        <div class="kana-display">
+          <span id="mainKana" class="main-kana">あ</span>
+          <span id="subKana" class="sub-kana">ア</span>
+        </div>
+        <div id="phonetic" class="phonetic-box">羅馬字: a | 諧音: 「阿」</div>
+        <div class="word-card" id="wordCard" onclick="speakCurrentWord()">
+          <span id="wordIcon" class="word-icon">🍬</span>
+          <span id="wordText" class="word-text">あめ</span>
+          <span id="wordMeaning" class="word-meaning">(糖果) 🔊 點擊發音</span>
+        </div>
+        <button class="speaker-btn" onclick="speakCurrentKana()">🔊 聽字音</button>
+      </div>
+      <div class="nav-actions">
+        <button class="action-btn" onclick="prevKana()">⬅️ 上一個</button>
+        <button class="action-btn" onclick="nextKana()">下一個 ➡️</button>
+      </div>
+    </section>
+
+    <!-- 描寫頁面 -->
+    <section id="writing" class="page">
+      <h2 style="margin: 0; font-size: 24px;">手指跟著描描看</h2>
+      <canvas id="writeCanvas" width="320" height="320"></canvas>
+      <div class="canvas-tools">
+        <button class="tool-btn" onclick="clearCanvas()">🗑️ 重寫</button>
+        <button class="tool-btn" onclick="speakCurrentKana()" style="background: var(--primary); color: white;">🔊 再聽一次</button>
+      </div>
+      <div class="nav-actions">
+        <button class="action-btn" onclick="prevKana()">⬅️ 上一個</button>
+        <button class="action-btn" onclick="nextKana()">下一個 ➡️</button>
+      </div>
+    </section>
+
+    <!-- 測驗頁面 -->
+    <section id="quiz" class="page">
+      <h2 style="font-size: 24px; text-align: center;">聽聲音，選出正確的字</h2>
+      <button class="speaker-btn" onclick="playQuizSound()" style="margin-bottom: 20px;">🔊 播放聲音</button>
+      <div class="quiz-options" id="quizOptions"></div>
+      <div id="quizFeedback" style="font-size: 28px; font-weight: bold; margin-top: 20px; height: 36px; color: var(--primary-dark);"></div>
+    </section>
+  </main>
+
+  <script>
+    const kanaData = [
+      { h: 'あ', k: 'ア', r: 'a', tw: '阿', word: 'あめ', wordIcon: '🍬', meaning: '糖果' },
+      { h: 'い', k: 'イ', r: 'i', tw: '依', word: 'いぬ', wordIcon: '🐕', meaning: '狗' },
+      { h: 'う', k: 'ウ', r: 'u', tw: '烏', word: 'うみ', wordIcon: '🌊', meaning: '大海' },
+      { h: 'え', k: 'エ', r: 'e', tw: '埃', word: 'えき', wordIcon: '🚉', meaning: '車站' },
+      { h: 'お', k: 'オ', r: 'o', tw: '歐', word: 'おか', wordIcon: '🏔️', meaning: '山丘' },
+      { h: 'か', k: 'カ', r: 'ka', tw: '咖', word: 'かさ', wordIcon: '☂️', meaning: '雨傘' },
+      { h: 'き', k: 'キ', r: 'ki', tw: '奇', word: 'き', wordIcon: '🌳', meaning: '樹木' },
+      { h: 'く', k: 'ク', r: 'ku', tw: '庫', word: 'くま', wordIcon: '🐻', meaning: '熊' },
+      { h: 'け', k: 'ケ', r: 'ke', tw: '開', word: '池', wordIcon: '🏞️', meaning: '池塘' },
+      { h: 'こ', k: 'コ', r: 'ko', tw: '扣', word: 'こえ', wordIcon: '🗣️', meaning: '聲音' }
+    ];
+
+    let currentIndex = 0;
+    let quizTargetIndex = 0;
+
+    function init() {
+      renderRowSelector();
+      updateCard();
+      initCanvas();
+      setupQuiz();
+      document.body.addEventListener('click', unlockAudio, { once: true });
+    }
+
+    function unlockAudio() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance('');
+        window.speechSynthesis.speak(u);
+      }
+    }
+
+    function renderRowSelector() {
+      const container = document.getElementById('rowSelector');
+      container.innerHTML = `
+        <button class="row-btn active" onclick="jumpToIndex(0)">あ行</button>
+        <button class="row-btn" onclick="jumpToIndex(5)">か行</button>
+      `;
+    }
+
+    function updateCard() {
+      const item = kanaData[currentIndex];
+      document.getElementById('mainKana').innerText = item.h;
+      document.getElementById('subKana').innerText = item.k;
+      document.getElementById('phonetic').innerText = `羅馬字: ${item.r} | 註解: 「${item.tw}」`;
+      document.getElementById('wordIcon').innerText = item.wordIcon;
+      document.getElementById('wordText').innerText = item.word;
+      document.getElementById('wordMeaning').innerText = `(${item.meaning}) 🔊 點擊發音`;
+      drawCanvasBg();
+    }
+
+    function speakText(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'ja-JP';
+        u.rate = 0.8;
+        window.speechSynthesis.speak(u);
+      }
+    }
+
+    function speakCurrentKana() { speakText(kanaData[currentIndex].h); }
+    function speakCurrentWord() { speakText(kanaData[currentIndex].word); }
+
+    function nextKana() {
+      currentIndex = (currentIndex + 1) % kanaData.length;
+      updateCard();
+    }
+
+    function prevKana() {
+      currentIndex = (currentIndex - 1 + kanaData.length) % kanaData.length;
+      updateCard();
+    }
+
+    function jumpToIndex(idx) {
+      currentIndex = idx;
+      updateCard();
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+      if(tabId === 'writing') drawCanvasBg();
+      if(tabId === 'quiz') setupQuiz();
+    }
+
+    // Canvas
+    let canvas, ctx, isDrawing = false;
+    function initCanvas() {
+      canvas = document.getElementById('writeCanvas');
+      ctx = canvas.getContext('2d');
+      canvas.addEventListener('pointerdown', startDraw);
+      canvas.addEventListener('pointermove', draw);
+      canvas.addEventListener('pointerup', endDraw);
+      drawCanvasBg();
+    }
+
+    function drawCanvasBg() {
+      if(!ctx) return;
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.font = '200px sans-serif';
+      ctx.fillStyle = '#f0f0f0';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(kanaData[currentIndex].h, canvas.width/2, canvas.height/2);
+    }
+
+    function startDraw(e) { isDrawing = true; ctx.beginPath(); draw(e); }
+    function draw(e) {
+      if (!isDrawing) return;
+      const rect = canvas.getBoundingClientRect();
+      ctx.lineWidth = 12; ctx.lineCap = 'round'; ctx.strokeStyle = '#d9534f';
+      ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+      ctx.stroke();
+    }
+    function endDraw() { isDrawing = false; }
+    function clearCanvas() { drawCanvasBg(); }
+
+    // Quiz
+    function setupQuiz() {
+      quizTargetIndex = Math.floor(Math.random() * kanaData.length);
+      document.getElementById('quizFeedback').innerText = '';
+      let options = [quizTargetIndex];
+      while(options.length < 4) {
+        let r = Math.floor(Math.random() * kanaData.length);
+        if(!options.includes(r)) options.push(r);
+      }
+      options.sort(() => Math.random() - 0.5);
+
+      const container = document.getElementById('quizOptions');
+      container.innerHTML = '';
+      options.forEach(optIdx => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-btn';
+        btn.innerText = kanaData[optIdx].h;
+        btn.onclick = () => checkQuiz(optIdx);
+        container.appendChild(btn);
+      });
+      playQuizSound();
+    }
+
+    function playQuizSound() { speakText(kanaData[quizTargetIndex].h); }
+
+    function checkQuiz(selectedIdx) {
+      const fb = document.getElementById('quizFeedback');
+      if(selectedIdx === quizTargetIndex) {
+        fb.innerText = '⭕ 太棒了！答對了！';
+        fb.style.color = '#27ae60';
+        setTimeout(setupQuiz, 1500);
+      } else {
+        fb.innerText = '❌ 再試一次看看喔！';
+        fb.style.color = '#c0392b';
+      }
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>
