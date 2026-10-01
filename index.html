@@ -188,7 +188,7 @@
           </div>
         </div>
         <div class="column-right">
-          <div style="font-size: 30px; font-weight: bold; color: var(--primary-dark); text-align: center;">請照左側九宮格與筆順箭頭描寫</div>
+          <div style="font-size: 30px; font-weight: bold; color: var(--primary-dark); text-align: center;">請照左側九宮格與筆順描寫</div>
         </div>
       </div>
 
@@ -310,23 +310,22 @@
       switchTab('flashcard');
     }
 
-    // 發音優化：延長假名音節，解決過於短促怪異問題
+    // 發音優化：加上日文逗號拖長假名音節，慢速清晰
     function speakText(text) {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(text);
         u.lang = 'ja-JP';
-        u.rate = 0.5; // 慢速清晰
+        u.rate = 0.5;
         window.speechSynthesis.speak(u);
       }
     }
 
     function speakCurrentKana() { 
-      // 在假名後加上全形空格與逗號，強迫語音引擎將音節完整拖長播放
       speakText(`${kanaData[currentIndex].h}、`); 
     }
 
-    // 解決連在一起問題：單字與例句之間強制加入 0.6 秒停頓
+    // 單字與例句之間強制加入 0.6 秒停頓
     function speakCurrentWord() { 
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
@@ -357,7 +356,7 @@
       if(tabId === 'quiz') setupQuiz();
     }
 
-    // Canvas (帶九宮格與練習本彩色筆順標號)
+    // Canvas (帶九宮格與練習本筆順)
     let canvas, ctx, isDrawing = false;
     function initCanvas() {
       canvas = document.getElementById('writeCanvas');
@@ -372,7 +371,7 @@
       if(!ctx) return;
       ctx.clearRect(0,0,canvas.width,canvas.height);
 
-      // 繪製九宮格/米字虛線
+      // 繪製九宮格虛線
       ctx.strokeStyle = '#a4b0be';
       ctx.lineWidth = 1.5;
       ctx.setLineDash([6, 6]);
@@ -389,7 +388,7 @@
       ctx.textBaseline = 'middle';
       ctx.fillText(kanaData[currentIndex].h, canvas.width/2, canvas.height/2);
 
-      // 繪製筆順數字標籤 (1 2 3)
+      // 繪製筆順數字 (1 2 3)
       const colors = ['#e74c3c', '#2ecc71', '#3498db', '#9b59b6'];
       const strokes = kanaData[currentIndex].strokes || [];
       strokes.forEach((s, idx) => {
