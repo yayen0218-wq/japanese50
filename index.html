@@ -188,7 +188,7 @@
           </div>
         </div>
         <div class="column-right">
-          <div style="font-size: 32px; font-weight: bold; color: var(--primary-dark);">請看左邊灰字，直接跟著描寫</div>
+          <div style="font-size: 30px; font-weight: bold; color: var(--primary-dark); text-align: center;">請照左側九宮格與筆順箭頭描寫</div>
         </div>
       </div>
 
@@ -209,54 +209,53 @@
   </main>
 
   <script>
-    // 完整 50 音清音資料庫 (46 假名)
     const kanaData = [
-      { h: 'あ', k: 'ア', r: 'a', word: 'あめ', wordIcon: '🍬', meaning: '糖果', sentence: 'あめを たべる' },
-      { h: 'い', k: 'イ', r: 'i', word: 'いぬ', wordIcon: '🐕', meaning: '小狗', sentence: 'かわいい いぬ' },
-      { h: 'う', k: 'ウ', r: 'u', word: 'うみ', wordIcon: '🌊', meaning: '大海', sentence: 'ひろい うみ' },
-      { h: 'え', k: 'エ', r: 'e', word: 'えき', wordIcon: '🚉', meaning: '車站', sentence: 'えきに いきます' },
-      { h: 'お', k: 'オ', r: 'o', word: 'おか', wordIcon: '🏔️', meaning: '山丘', sentence: 'たかい おか' },
-      { h: 'か', k: 'カ', r: 'ka', word: 'かさ', wordIcon: '☂️', meaning: '雨傘', sentence: '赤い かさ' },
-      { h: 'き', k: 'キ', r: 'ki', word: 'き', wordIcon: '🌳', meaning: '樹木', sentence: '大きな き' },
-      { h: 'く', k: 'ク', r: 'ku', word: 'くま', wordIcon: '🐻', meaning: '熊', sentence: 'かわいい くま' },
-      { h: 'け', k: 'ケ', r: 'ke', word: 'けいさつ', wordIcon: '👮', meaning: '警察', sentence: '親切な けいさつ' },
-      { h: 'こ', k: 'コ', r: 'ko', word: 'こえ', wordIcon: '🗣️', meaning: '聲音', sentence: '大きな こえ' },
-      { h: 'さ', k: 'サ', r: 'sa', word: 'さくら', wordIcon: '🌸', meaning: '櫻花', sentence: '綺麗な さくら' },
-      { h: 'し', k: 'シ', r: 'shi', word: 'しんかんせん', wordIcon: '🚄', meaning: '新幹線', sentence: '速い しんかんせん' },
-      { h: 'す', k: 'ス', r: 'su', word: 'すいか', wordIcon: '🍉', meaning: '西瓜', sentence: '甘い すいか' },
-      { h: 'せ', k: 'セ', r: 'se', word: 'せんせい', wordIcon: '🧑‍🏫', meaning: '老師', sentence: '優しい せんせい' },
-      { h: 'そ', k: 'ソ', r: 'so', word: 'そら', wordIcon: '☁️', meaning: '天空', sentence: '青い そら' },
-      { h: 'た', k: 'タ', r: 'ta', word: 'たまご', wordIcon: '🥚', meaning: '雞蛋', sentence: '美味しい たまご' },
-      { h: 'ち', k: 'チ', r: 'chi', word: 'ちず', wordIcon: '🗺️', meaning: '地圖', sentence: '新しい ちず' },
-      { h: 'つ', k: 'ツ', r: 'tsu', word: 'つくえ', wordIcon: '🪑', meaning: '桌子', sentence: '木の つくえ' },
-      { h: 'て', k: 'テ', r: 'te', word: 'て', wordIcon: '✋', meaning: '手', sentence: '手を 洗う' },
-      { h: 'と', k: 'ト', r: 'to', word: 'とけい', wordIcon: '⏰', meaning: '時鐘', sentence: '正しい とけい' },
-      { h: 'な', k: 'ナ', r: 'na', word: '夏', wordIcon: '🌻', meaning: '夏天', sentence: '暑い 夏' },
-      { h: 'に', k: 'ニ', r: 'ni', word: 'にく', wordIcon: '🥩', meaning: '肉', sentence: '美味しい にく' },
-      { h: 'ぬ', k: 'ヌ', r: 'nu', word: 'ぬいぐるみ', wordIcon: '🧸', meaning: '玩偶', sentence: '可愛い ぬいぐるみ' },
-      { h: 'ね', k: 'ネ', r: 'ne', word: 'ねこ', wordIcon: '🐱', meaning: '貓咪', sentence: 'ねこが 好き' },
-      { h: 'の', k: 'ノ', r: 'no', word: 'のり', wordIcon: '🍙', meaning: '海苔', sentence: 'のり おにぎり' },
-      { h: 'は', k: 'ハ', r: 'ha', word: 'はな', wordIcon: '🌹', meaning: '花朵', sentence: '赤い はな' },
-      { h: 'ひ', k: 'ヒ', r: 'hi', word: 'ひこうき', wordIcon: '✈️', meaning: '飛機', sentence: '飛ぶ ひこうき' },
-      { h: 'ふ', k: 'フ', r: 'fu', word: 'ふね', wordIcon: '🚢', meaning: '船', sentence: '大きな ふね' },
-      { h: 'へ', k: 'ヘ', r: 'he', word: 'へや', wordIcon: '🏠', meaning: '房間', sentence: '明るい へや' },
-      { h: 'ほ', k: 'ホ', r: 'ho', word: 'ほし', wordIcon: '⭐', meaning: '星星', sentence: '光る ほし' },
-      { h: 'ま', k: 'マ', r: 'ma', word: 'まつり', wordIcon: '🏮', meaning: '祭典', sentence: '楽しい まつり' },
-      { h: 'み', k: 'ミ', r: 'mi', word: 'みず', wordIcon: '💧', meaning: '水', sentence: '冷たい みず' },
-      { h: 'む', k: 'ム', r: 'mu', word: 'むし', wordIcon: '🐞', meaning: '昆蟲', sentence: '小さな むし' },
-      { h: 'め', k: 'メ', r: 'me', word: 'めがね', wordIcon: '👓', meaning: '眼鏡', sentence: '新しい めがね' },
-      { h: 'も', k: 'モ', r: 'mo', word: 'もも', wordIcon: '🍑', meaning: '水蜜桃', sentence: '甘い もも' },
-      { h: 'や', k: 'ヤ', r: 'ya', word: 'やま', wordIcon: '⛰️', meaning: '山', sentence: '高い やま' },
-      { h: 'ゆ', k: 'ユ', r: 'yu', word: 'ゆき', wordIcon: '❄️', meaning: '雪', sentence: '白い ゆき' },
-      { h: 'よ', k: 'ヨ', r: 'yo', word: 'よる', wordIcon: '🌙', meaning: '夜晚', sentence: '静かな よる' },
-      { h: 'ら', k: 'ラ', r: 'ra', word: 'らいおん', wordIcon: '🦁', meaning: '獅子', sentence: '強い らいおん' },
-      { h: 'り', k: 'リ', r: 'ri', word: 'りんご', wordIcon: '🍎', meaning: '蘋果', sentence: '赤い りんご' },
-      { h: 'る', k: 'ル', r: 'ru', word: '留守', wordIcon: '🏠', meaning: '看家', sentence: 'お留守番' },
-      { h: 'れ', k: 'レ', r: 're', word: 'れもん', wordIcon: '🍋', meaning: '檸檬', sentence: '酸っぱい れもん' },
-      { h: 'ろ', k: 'ロ', r: 'ro', word: 'ろうそく', wordIcon: '🕯️', meaning: '蠟燭', sentence: '明るい ろうそく' },
-      { h: 'わ', k: 'ワ', r: 'wa', word: 'わに', wordIcon: '🐊', meaning: '鱷魚', sentence: '大きな わに' },
-      { h: 'を', k: 'ヲ', r: 'wo', word: '本を飲む', wordIcon: '📖', meaning: '助詞', sentence: '本を 読む' },
-      { h: 'ん', k: 'ン', r: 'n', word: 'みかん', wordIcon: '🍊', meaning: '撥音', sentence: '甘い みかん' }
+      { h: 'あ', k: 'ア', r: 'a', word: 'あめ', wordIcon: '🍬', meaning: '糖果', sentence: 'あめを たべる', strokes: [{x:90,y:120,label:'1'},{x:170,y:70,label:'2'},{x:230,y:160,label:'3'}] },
+      { h: 'い', k: 'イ', r: 'i', word: 'いぬ', wordIcon: '🐕', meaning: '小狗', sentence: 'かわいい いぬ', strokes: [{x:110,y:110,label:'1'},{x:220,y:130,label:'2'}] },
+      { h: 'う', k: 'ウ', r: 'u', word: 'うみ', wordIcon: '🌊', meaning: '大海', sentence: 'ひろい うみ', strokes: [{x:160,y:80,label:'1'},{x:120,y:150,label:'2'}] },
+      { h: 'え', k: 'エ', r: 'e', word: 'えき', wordIcon: '🚉', meaning: '車站', sentence: 'えきに いきます', strokes: [{x:160,y:80,label:'1'},{x:110,y:140,label:'2'}] },
+      { h: 'お', k: 'オ', r: 'o', word: 'おか', wordIcon: '🏔️', meaning: '山丘', sentence: 'たかい おか', strokes: [{x:90,y:130,label:'1'},{x:160,y:70,label:'2'},{x:250,y:110,label:'3'}] },
+      { h: 'か', k: 'カ', r: 'ka', word: 'かさ', wordIcon: '☂️', meaning: '雨傘', sentence: '赤い かさ', strokes: [{x:100,y:120,label:'1'},{x:200,y:80,label:'2'},{x:250,y:100,label:'3'}] },
+      { h: 'き', k: 'キ', r: 'ki', word: 'き', wordIcon: '🌳', meaning: '樹木', sentence: '大きな き', strokes: [{x:100,y:120,label:'1'},{x:100,y:160,label:'2'},{x:170,y:70,label:'3'}] },
+      { h: 'く', k: 'ク', r: 'ku', word: 'くま', wordIcon: '🐻', meaning: '熊', sentence: 'かわいい くま', strokes: [{x:120,y:120,label:'1'}] },
+      { h: 'け', k: 'ケ', r: 'ke', word: 'けいさつ', wordIcon: '👮', meaning: '警察', sentence: '親切な けいさつ', strokes: [{x:100,y:100,label:'1'},{x:170,y:110,label:'2'},{x:220,y:90,label:'3'}] },
+      { h: 'こ', k: 'コ', r: 'ko', word: 'こえ', wordIcon: '🗣️', meaning: '聲音', sentence: '大きな こえ', strokes: [{x:120,y:110,label:'1'},{x:120,y:210,label:'2'}] },
+      { h: 'さ', k: 'サ', r: 'sa', word: 'さくら', wordIcon: '🌸', meaning: '櫻花', sentence: '綺麗な さくら', strokes: [{x:100,y:120,label:'1'},{x:190,y:90,label:'2'},{x:210,y:170,label:'3'}] },
+      { h: 'し', k: 'シ', r: 'shi', word: 'しんかんせん', wordIcon: '🚄', meaning: '新幹線', sentence: '速い しんかんせん', strokes: [{x:150,y:90,label:'1'}] },
+      { h: 'す', k: 'ス', r: 'su', word: 'すいか', wordIcon: '🍉', meaning: '西瓜', sentence: '甘い すいか', strokes: [{x:90,y:120,label:'1'},{x:180,y:80,label:'2'}] },
+      { h: 'せ', k: 'セ', r: 'se', word: 'せんせい', wordIcon: '🧑‍🏫', meaning: '老師', sentence: '優しい せんせい', strokes: [{x:90,y:130,label:'1'},{x:220,y:100,label:'2'},{x:140,y:100,label:'3'}] },
+      { h: 'そ', k: 'ソ', r: 'so', word: 'そら', wordIcon: '☁️', meaning: '天空', sentence: '青い そら', strokes: [{x:110,y:100,label:'1'}] },
+      { h: 'た', k: 'タ', r: 'ta', word: 'たまご', wordIcon: '🥚', meaning: '雞蛋', sentence: '美味しい たまご', strokes: [{x:90,y:120,label:'1'},{x:150,y:80,label:'2'},{x:190,y:140,label:'3'},{x:200,y:190,label:'4'}] },
+      { h: 'ち', k: 'チ', r: 'chi', word: 'ちず', wordIcon: '🗺️', meaning: '地圖', sentence: '新しい ちず', strokes: [{x:100,y:120,label:'1'},{x:130,y:80,label:'2'}] },
+      { h: 'つ', k: 'ツ', r: 'tsu', word: 'つくえ', wordIcon: '🪑', meaning: '桌子', sentence: '木の つくえ', strokes: [{x:110,y:120,label:'1'}] },
+      { h: 'て', k: 'テ', r: 'te', word: 'て', wordIcon: '✋', meaning: '手', sentence: '手を 洗う', strokes: [{x:100,y:120,label:'1'}] },
+      { h: 'と', k: 'ト', r: 'to', word: 'とけい', wordIcon: '⏰', meaning: '時鐘', sentence: '正しい とけい', strokes: [{x:130,y:100,label:'1'},{x:140,y:160,label:'2'}] },
+      { h: 'な', k: 'ナ', r: 'na', word: '夏', wordIcon: '🌻', meaning: '夏天', sentence: '暑い 夏', strokes: [{x:90,y:120,label:'1'},{x:150,y:80,label:'2'},{x:220,y:120,label:'3'},{x:230,y:170,label:'4'}] },
+      { h: 'に', k: 'ニ', r: 'ni', word: 'にく', wordIcon: '🥩', meaning: '肉', sentence: '美味しい にく', strokes: [{x:100,y:100,label:'1'},{x:180,y:120,label:'2'},{x:180,y:180,label:'3'}] },
+      { h: 'ぬ', k: 'ヌ', r: 'nu', word: 'ぬいぐるみ', wordIcon: '🧸', meaning: '玩偶', sentence: '可愛い ぬいぐるみ', strokes: [{x:130,y:90,label:'1'},{x:110,y:120,label:'2'}] },
+      { h: 'ね', k: 'ネ', r: 'ne', word: 'ねこ', wordIcon: '🐱', meaning: '貓咪', sentence: 'ねこが 好き', strokes: [{x:110,y:90,label:'1'},{x:120,y:120,label:'2'}] },
+      { h: 'の', k: 'ノ', r: 'no', word: 'のり', wordIcon: '🍙', meaning: '海苔', sentence: 'のり おにぎり', strokes: [{x:160,y:120,label:'1'}] },
+      { h: 'は', k: 'ハ', r: 'ha', word: 'はな', wordIcon: '🌹', meaning: '花朵', sentence: '赤い はな', strokes: [{x:100,y:90,label:'1'},{x:170,y:120,label:'2'},{x:210,y:140,label:'3'}] },
+      { h: 'ひ', k: 'ヒ', r: 'hi', word: 'ひこうき', wordIcon: '✈️', meaning: '飛機', sentence: '飛ぶ ひこうき', strokes: [{x:100,y:120,label:'1'}] },
+      { h: 'ふ', k: 'フ', r: 'fu', word: 'ふね', wordIcon: '🚢', meaning: '船', sentence: '大きな ふね', strokes: [{x:160,y:80,label:'1'},{x:120,y:130,label:'2'},{x:210,y:130,label:'3'},{x:240,y:170,label:'4'}] },
+      { h: 'へ', k: 'ヘ', r: 'he', word: 'へや', wordIcon: '🏠', meaning: '房間', sentence: '明るい へや', strokes: [{x:100,y:150,label:'1'}] },
+      { h: 'ほ', k: 'ホ', r: 'ho', word: 'ほし', wordIcon: '⭐', meaning: '星星', sentence: '光る ほし', strokes: [{x:100,y:90,label:'1'},{x:170,y:110,label:'2'},{x:170,y:150,label:'3'},{x:210,y:130,label:'4'}] },
+      { h: 'ま', k: 'マ', r: 'ma', word: 'まつり', wordIcon: '🏮', meaning: '祭典', sentence: '楽しい まつり', strokes: [{x:100,y:120,label:'1'},{x:100,y:160,label:'2'},{x:170,y:80,label:'3'}] },
+      { h: 'み', k: 'ミ', r: 'mi', word: 'みず', wordIcon: '💧', meaning: '水', sentence: '冷たい みず', strokes: [{x:110,y:110,label:'1'},{x:200,y:160,label:'2'}] },
+      { h: 'む', k: 'ム', r: 'mu', word: 'むし', wordIcon: '🐞', meaning: '昆蟲', sentence: '小さな むし', strokes: [{x:100,y:130,label:'1'},{x:160,y:80,label:'2'},{x:240,y:100,label:'3'}] },
+      { h: 'め', k: 'メ', r: 'me', word: 'めがね', wordIcon: '👓', meaning: '眼鏡', sentence: '新しい めがね', strokes: [{x:140,y:100,label:'1'},{x:110,y:130,label:'2'}] },
+      { h: 'も', k: 'モ', r: 'mo', word: 'もも', wordIcon: '🍑', meaning: '水蜜桃', sentence: '甘い もも', strokes: [{x:160,y:80,label:'1'},{x:110,y:130,label:'2'},{x:110,y:170,label:'3'}] },
+      { h: 'や', k: 'ヤ', r: 'ya', word: 'やま', wordIcon: '⛰️', meaning: '山', sentence: '高い やま', strokes: [{x:100,y:120,label:'1'},{x:150,y:90,label:'2'},{x:230,y:80,label:'3'}] },
+      { h: 'ゆ', k: 'ユ', r: 'yu', word: 'ゆき', wordIcon: '❄️', meaning: '雪', sentence: '白い ゆき', strokes: [{x:110,y:110,label:'1'},{x:200,y:80,label:'2'}] },
+      { h: 'よ', k: 'ヨ', r: 'yo', word: 'よる', wordIcon: '🌙', meaning: '夜晚', sentence: '静かな よる', strokes: [{x:110,y:120,label:'1'},{x:170,y:80,label:'2'}] },
+      { h: 'ら', k: 'ラ', r: 'ra', word: 'らいおん', wordIcon: '🦁', meaning: '獅子', sentence: '強い らいおん', strokes: [{x:160,y:80,label:'1'},{x:130,y:130,label:'2'}] },
+      { h: 'り', k: 'リ', r: 'ri', word: 'りんご', wordIcon: '🍎', meaning: '蘋果', sentence: '赤い りんご', strokes: [{x:120,y:100,label:'1'},{x:220,y:80,label:'2'}] },
+      { h: 'る', k: 'ル', r: 'ru', word: '留守', wordIcon: '🏠', meaning: '看家', sentence: 'お留守番', strokes: [{x:110,y:110,label:'1'}] },
+      { h: 'れ', k: 'レ', r: 're', word: 'れもん', wordIcon: '🍋', meaning: '檸檬', sentence: '酸っぱい れもん', strokes: [{x:110,y:90,label:'1'},{x:120,y:120,label:'2'}] },
+      { h: 'ろ', k: 'ロ', r: 'ro', word: 'ろうそく', wordIcon: '🕯️', meaning: '蠟燭', sentence: '明るい ろうそく', strokes: [{x:110,y:110,label:'1'}] },
+      { h: 'わ', k: 'ワ', r: 'wa', word: 'わに', wordIcon: '🐊', meaning: '鱷魚', sentence: '大きな わに', strokes: [{x:110,y:90,label:'1'},{x:120,y:120,label:'2'}] },
+      { h: 'を', k: 'ヲ', r: 'wo', word: '本を飲む', wordIcon: '📖', meaning: '助詞', sentence: '本を 読む', strokes: [{x:100,y:110,label:'1'},{x:100,y:160,label:'2'},{x:140,y:180,label:'3'}] },
+      { h: 'ん', k: 'ン', r: 'n', word: 'みかん', wordIcon: '🍊', meaning: '撥音', sentence: '甘い みかん', strokes: [{x:120,y:130,label:'1'}] }
     ];
 
     let currentIndex = 0;
@@ -311,21 +310,36 @@
       switchTab('flashcard');
     }
 
-    // 發音優化：隻朗讀指定的文字，完全不加贅字
+    // 發音優化：延長假名音節，解決過於短促怪異問題
     function speakText(text) {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(text);
         u.lang = 'ja-JP';
-        u.rate = 0.6;
+        u.rate = 0.5; // 慢速清晰
         window.speechSynthesis.speak(u);
       }
     }
 
-    function speakCurrentKana() { speakText(kanaData[currentIndex].h); }
+    function speakCurrentKana() { 
+      // 在假名後加上全形空格與逗號，強迫語音引擎將音節完整拖長播放
+      speakText(`${kanaData[currentIndex].h}、`); 
+    }
+
+    // 解決連在一起問題：單字與例句之間強制加入 0.6 秒停頓
     function speakCurrentWord() { 
-      // 先發音單字，再發音例句
-      speakText(`${kanaData[currentIndex].word}。${kanaData[currentIndex].sentence}`); 
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const u1 = new SpeechSynthesisUtterance(kanaData[currentIndex].word);
+        u1.lang = 'ja-JP'; u1.rate = 0.5;
+        const u2 = new SpeechSynthesisUtterance(kanaData[currentIndex].sentence);
+        u2.lang = 'ja-JP'; u2.rate = 0.5;
+
+        window.speechSynthesis.speak(u1);
+        u1.onend = () => {
+          setTimeout(() => { window.speechSynthesis.speak(u2); }, 600);
+        };
+      }
     }
 
     function nextKana() { currentIndex = (currentIndex + 1) % kanaData.length; updateCard(); }
@@ -343,7 +357,7 @@
       if(tabId === 'quiz') setupQuiz();
     }
 
-    // Canvas
+    // Canvas (帶九宮格與練習本彩色筆順標號)
     let canvas, ctx, isDrawing = false;
     function initCanvas() {
       canvas = document.getElementById('writeCanvas');
@@ -357,11 +371,32 @@
     function drawCanvasBg() {
       if(!ctx) return;
       ctx.clearRect(0,0,canvas.width,canvas.height);
+
+      // 繪製九宮格/米字虛線
+      ctx.strokeStyle = '#a4b0be';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([6, 6]);
+      ctx.beginPath();
+      ctx.moveTo(canvas.width / 2, 0); ctx.lineTo(canvas.width / 2, canvas.height);
+      ctx.moveTo(0, canvas.height / 2); ctx.lineTo(canvas.width, canvas.height / 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // 繪製描寫底字
       ctx.font = '240px sans-serif';
-      ctx.fillStyle = '#e2e8f0';
+      ctx.fillStyle = '#dcdde1';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText(kanaData[currentIndex].h, canvas.width/2, canvas.height/2);
+
+      // 繪製筆順數字標籤 (1 2 3)
+      const colors = ['#e74c3c', '#2ecc71', '#3498db', '#9b59b6'];
+      const strokes = kanaData[currentIndex].strokes || [];
+      strokes.forEach((s, idx) => {
+        ctx.font = 'bold 26px sans-serif';
+        ctx.fillStyle = colors[idx % colors.length];
+        ctx.fillText(s.label, s.x, s.y);
+      });
     }
 
     function startDraw(e) { isDrawing = true; ctx.beginPath(); draw(e); }
@@ -398,7 +433,7 @@
       playQuizSound();
     }
 
-    function playQuizSound() { speakText(kanaData[quizTargetIndex].h); }
+    function playQuizSound() { speakText(`${kanaData[quizTargetIndex].h}、`); }
 
     function checkQuiz(selectedIdx) {
       const fb = document.getElementById('quizFeedback');
